@@ -1,14 +1,17 @@
 package com.sc.pedidos.model;
 
+import com.sc.pedidos.model.enums.SituacaoProdutoServico;
+import com.sc.pedidos.model.enums.TipoItem;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "produto_servico")
-public class ProdutoServico {
+public class ProdutoServico implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -28,30 +31,20 @@ public class ProdutoServico {
 
     @NotNull
     @Column(name = "tipo", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoItem tipo;
 
-    public @NotNull TipoItem getTipo() {
-        return tipo;
+    @NotNull
+    @Column(name = "situacao", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SituacaoProdutoServico situacao;
+
+    public UUID getId() {
+        return id;
     }
 
-    public void setTipo(@NotNull TipoItem tipo) {
-        this.tipo = tipo;
-    }
-
-    public @NotNull BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(@NotNull BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public @NotNull String getNome() {
@@ -62,11 +55,35 @@ public class ProdutoServico {
         this.nome = nome;
     }
 
-    public UUID getId() {
-        return id;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public @NotNull BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(@NotNull BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public @NotNull TipoItem getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(@NotNull TipoItem tipo) {
+        this.tipo = tipo;
+    }
+
+    public @NotNull SituacaoProdutoServico getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(@NotNull SituacaoProdutoServico situacao) {
+        this.situacao = situacao;
     }
 }

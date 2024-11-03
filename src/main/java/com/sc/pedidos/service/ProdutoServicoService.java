@@ -13,19 +13,19 @@ public class ProdutoServicoService {
     @Autowired
     private ProdutoServicoRepository repository;
 
-    public List<ProdutoServico> buscarTodos() {
+    public List<ProdutoServico> findAll() {
         return repository.findAll();
     }
 
-    public ProdutoServico buscarPorId(Long id) {
+    public ProdutoServico findById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public ProdutoServico salvar (ProdutoServico produtoServico) {
-        return  repository.save(produtoServico);
+    public ProdutoServico save(ProdutoServico produtoServico) {
+        return repository.save(produtoServico);
     }
 
-    public void excluir (ProdutoServico produtoServico) {
+    public void delete(ProdutoServico produtoServico) {
         repository.delete(produtoServico);
     }
 

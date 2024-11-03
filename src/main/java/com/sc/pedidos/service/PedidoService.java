@@ -13,19 +13,19 @@ public class PedidoService {
     @Autowired
     private PedidoRepository repository;
 
-    public List<Pedido> buscarTodos() {
+    public List<Pedido> findAll() {
         return repository.findAll();
     }
 
-    public Pedido buscarPorId(Long id) {
+    public Pedido findByID(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public Pedido salvar(Pedido pedido) {
+    public Pedido save(Pedido pedido) {
         return repository.save(pedido);
     }
 
-    public void excluir(Pedido pedido) {
+    public void delete(Pedido pedido) {
         repository.delete(pedido);
     }
 }

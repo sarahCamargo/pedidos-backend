@@ -1,28 +1,37 @@
 package com.sc.pedidos.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "itens_pedido")
-public class ItensPedido {
+public class ItensPedido implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "produto_servico_id", nullable = false)
+    @NotNull
+    @JoinColumn(name = "produto_servico_id", nullable = false)
+    @ManyToOne
     private ProdutoServico produtoServico;
 
-    @Column(name = "pedido_id", nullable = false)
+    @NotNull
+    @JoinColumn(name = "pedido_id", nullable = false)
+    @ManyToOne
     private Pedido pedido;
 
     @Column(name = "percentual_desconto")
     private BigDecimal percentualDesconto;
 
+    @Min(1)
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
@@ -34,19 +43,19 @@ public class ItensPedido {
         this.id = id;
     }
 
-    public ProdutoServico getProdutoServico() {
+    public @NotNull ProdutoServico getProdutoServico() {
         return produtoServico;
     }
 
-    public void setProdutoServico(ProdutoServico produtoServico) {
+    public void setProdutoServico(@NotNull ProdutoServico produtoServico) {
         this.produtoServico = produtoServico;
     }
 
-    public Pedido getPedido() {
+    public @NotNull Pedido getPedido() {
         return pedido;
     }
 
-    public void setPedido(Pedido pedido) {
+    public void setPedido(@NotNull Pedido pedido) {
         this.pedido = pedido;
     }
 
@@ -58,11 +67,11 @@ public class ItensPedido {
         this.percentualDesconto = percentualDesconto;
     }
 
-    public Integer getQuantidade() {
+    public @Min(1) Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Integer quantidade) {
+    public void setQuantidade(@Min(1) Integer quantidade) {
         this.quantidade = quantidade;
     }
 }
