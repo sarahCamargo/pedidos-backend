@@ -45,7 +45,7 @@ public class ProdutoServicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProdutoServico> delete(@PathVariable UUID id) {
+    public ResponseEntity<ProdutoServico> delete(@PathVariable UUID id) throws Exception {
         ProdutoServico produtoServico = service.findById(id);
 
         if (produtoServico == null) {

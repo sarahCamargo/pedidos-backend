@@ -36,7 +36,7 @@ public class PedidoService {
         return repository.findById(id).orElse(null);
     }
 
-    public Pedido save(Pedido pedido) {
+    public Pedido save(Pedido pedido) throws Exception {
         List<ItensPedido> itensPedidos = pedido.getItensPedido();
 
         if (pedido.getId() != null) {
@@ -54,21 +54,19 @@ public class PedidoService {
         return pedidoSalvo;
     }
 
-    private BigDecimal calcularDesconto(Pedido pedido, ItensPedido itensPedido) {
+    private BigDecimal calcularDesconto(Pedido pedido, ItensPedido itensPedido) throws Exception {
         BigDecimal produtoPreco = itensPedido.getProdutoServico().getPreco();
         BigDecimal valorTotalProdutos = produtoPreco.multiply(new BigDecimal(itensPedido.getQuantidade()));
 
         if (SituacaoPedido.FECHADO.equals(pedido.getSituacao()) && pedido.getPercentualDesconto() != null && !Objects.equals(pedido.getPercentualDesconto(), new BigDecimal("0"))) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Não é possível inserir desconto em pedidos fechados"
-            );
+            throw new Exception("Não é possível inserir desconto em pedidos fechados");
         }
 
         if (pedido.getPercentualDesconto() != null) {
             BigDecimal percentual = pedido.getPercentualDesconto().divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
             return valorTotalProdutos.subtract(valorTotalProdutos.multiply(percentual));
         }
-        return  valorTotalProdutos;
+        return valorTotalProdutos;
     }
 
     private void resetItensPedidoId(Pedido pedido) {
@@ -78,18 +76,16 @@ public class PedidoService {
         }
     }
 
-    private void setItensPedidoId(Pedido pedidoSalvo, List<ItensPedido> itensPedidos) {
+    private void setItensPedidoId(Pedido pedidoSalvo, List<ItensPedido> itensPedidos) throws Exception {
         for (ItensPedido item : itensPedidos) {
-            if (SituacaoProdutoServico.DESATIVADO.equals(item.getProdutoServico().getSituacao())){
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "Não é possível adicionar produtos desativados"
-                );
+            if (SituacaoProdutoServico.DESATIVADO.equals(item.getProdutoServico().getSituacao())) {
+                throw new Exception("Não é possível adicionar produtos desativados");
             }
             item.setPedido(pedidoSalvo);
         }
     }
 
-    private void calcularValorTotal(Pedido pedidoSalvo, List<ItensPedido> itensPedidos) {
+    private void calcularValorTotal(Pedido pedidoSalvo, List<ItensPedido> itensPedidos) throws Exception {
         BigDecimal valorTotalDesconto = new BigDecimal("0");
         for (ItensPedido item : itensPedidos) {
             item.setPedido(pedidoSalvo);

@@ -32,12 +32,10 @@ public class ProdutoServicoService {
         return repository.save(produtoServico);
     }
 
-    public void delete(ProdutoServico produtoServico) {
+    public void delete(ProdutoServico produtoServico) throws Exception {
         ItensPedido itensPedido = itensPedidoService.findByProdutoId(produtoServico.getId());
         if (itensPedido != null) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Não é possível excluir produto vinculado à um pedido"
-            );
+            throw new Exception("Não é possível excluir produto vinculado à um pedido");
         }
         repository.delete(produtoServico);
     }

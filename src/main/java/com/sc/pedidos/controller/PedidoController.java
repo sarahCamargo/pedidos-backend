@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -31,12 +33,12 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> save(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> save(@RequestBody Pedido pedido) throws Exception {
         return ResponseEntity.ok(service.save(pedido));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> update(@RequestBody Pedido pedidoAlterado, @PathVariable UUID id) {
+    public ResponseEntity<Pedido> update(@RequestBody Pedido pedidoAlterado, @PathVariable UUID id) throws Exception {
         Pedido pedido = service.findByID(id);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
