@@ -1,5 +1,7 @@
 package com.sc.pedidos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -26,10 +28,8 @@ public class ItensPedido implements Serializable {
     @NotNull
     @JoinColumn(name = "pedido_id", nullable = false)
     @ManyToOne
+    @JsonIgnore
     private Pedido pedido;
-
-    @Column(name = "percentual_desconto")
-    private BigDecimal percentualDesconto;
 
     @Min(1)
     @Column(name = "quantidade", nullable = false)
@@ -57,14 +57,6 @@ public class ItensPedido implements Serializable {
 
     public void setPedido(@NotNull Pedido pedido) {
         this.pedido = pedido;
-    }
-
-    public BigDecimal getPercentualDesconto() {
-        return percentualDesconto;
-    }
-
-    public void setPercentualDesconto(BigDecimal percentualDesconto) {
-        this.percentualDesconto = percentualDesconto;
     }
 
     public @Min(1) Integer getQuantidade() {

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/pedido")
@@ -16,12 +17,12 @@ public class PedidoController {
     private PedidoService service;
 
     @GetMapping
-    public List<Pedido> buscarTodos() {
+    public List<Pedido> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Pedido> findById(@PathVariable UUID id) {
         Pedido pedido = service.findByID(id);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
@@ -30,12 +31,12 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> adicionar(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> save(@RequestBody Pedido pedido) {
         return ResponseEntity.ok(service.save(pedido));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> alterar(@RequestBody Pedido pedidoAlterado, @PathVariable Long id) {
+    public ResponseEntity<Pedido> update(@RequestBody Pedido pedidoAlterado, @PathVariable UUID id) {
         Pedido pedido = service.findByID(id);
         if (pedido == null) {
             return ResponseEntity.notFound().build();
@@ -44,7 +45,7 @@ public class PedidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Pedido> excluir(@PathVariable Long id) {
+    public ResponseEntity<Pedido> excluir(@PathVariable UUID id) {
         Pedido pedido = service.findByID(id);
         if (pedido == null) {
             return ResponseEntity.notFound().build();

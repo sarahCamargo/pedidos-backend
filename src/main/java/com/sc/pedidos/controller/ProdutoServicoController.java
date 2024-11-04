@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/produto-servico")
@@ -16,12 +17,12 @@ public class ProdutoServicoController {
     private ProdutoServicoService service;
 
     @GetMapping
-    public List<ProdutoServico> buscarTodos() {
+    public List<ProdutoServico> findAll() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoServico> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ProdutoServico> findById(@PathVariable UUID id) {
         ProdutoServico produtoServico = service.findById(id);
         if (produtoServico == null) {
             return ResponseEntity.notFound().build();
@@ -30,12 +31,12 @@ public class ProdutoServicoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoServico> adicionar(@RequestBody ProdutoServico produtoServico) {
+    public ResponseEntity<ProdutoServico> save(@RequestBody ProdutoServico produtoServico) {
         return ResponseEntity.ok(service.save(produtoServico));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoServico> alterar(@RequestBody ProdutoServico produtoServicoAlterado, @PathVariable Long id) {
+    public ResponseEntity<ProdutoServico> update(@RequestBody ProdutoServico produtoServicoAlterado, @PathVariable UUID id) {
         ProdutoServico produtoServico = service.findById(id);
         if (produtoServico == null) {
             return ResponseEntity.notFound().build();
@@ -44,8 +45,9 @@ public class ProdutoServicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProdutoServico> excluir(@PathVariable Long id) {
+    public ResponseEntity<ProdutoServico> delete(@PathVariable UUID id) {
         ProdutoServico produtoServico = service.findById(id);
+
         if (produtoServico == null) {
             return ResponseEntity.notFound().build();
         }
