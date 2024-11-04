@@ -2,7 +2,7 @@
 
 Frontend: [Pedidos Frontend](https://github.com/sarahCamargo/pedidos-frontend)
 
-## Funcionalidades
+# Funcionalidades
 
 - **Módulo Produtos e Serviços**
   - Adicionar novos produtos ou serviços ao sistema.
