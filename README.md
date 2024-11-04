@@ -1,5 +1,27 @@
 # PedidosBackend
 
+Frontend: [Pedidos Frontend](https://github.com/sarahCamargo/pedidos-frontend)
+
+## Funcionalidades
+
+- **Módulo Produtos e Serviços**
+  - Adicionar novos produtos ou serviços ao sistema.
+  - Listar todos os produtos e serviços cadastrados.
+  - Atualizar informações de produtos ou serviços existentes.
+  - Remover produtos ou serviços do sistema.
+
+- **Módulo Pedidos**
+  - Criar novos pedidos, associando produtos e serviços.
+  - Visualizar detalhes de pedidos existentes.
+  - Atualizar o status dos pedidos.
+  - Calcular o valor total dos pedidos com base nos itens selecionados.
+
+## Tecnologias Utilizadas
+
+- **Backend:** Spring Boot, JPA, Hibernate, PostgreSQL.
+- **Frontend:** Angular
+
+
 # Instruções para Configuração do Servidor Backend
 
 ## Pré-requisitos
